@@ -1,7 +1,6 @@
 import random
 
 list_word = []
-unknown_word = []
 reintent = 10
 
 with open('./source/words.txt', 'r', encoding='utf-8') as archivo_lectura:
@@ -17,6 +16,7 @@ word_random = list_word[random.randint(0,len(list_word))]
 word_random = list(word_random)
 word_random_string = "".join(word_random)
 
+unknown_word = []
 for x in range(len(word_random)):
     unknown_word.append('-')
 
@@ -29,23 +29,27 @@ show_word()
 
 while True:
     if unknown_word != word_random:
+        
         print(f"Tienes {reintent} intentos.")
         pregunta = input('una letra: ')
+        
         counter_index = 0
-        reintent -=1
+        punch = False
         
         for i in word_random:
             if i == pregunta:
                 unknown_word[counter_index] = i
-                reintent = len(word_random)+1
+                punch = True
             counter_index +=1
-            
+        
+        if punch is False:
+            reintent -=1
+        
         show_word()
         
         if reintent == 0:
             print(f'Gamer Over la palabra era {word_random_string.upper()}')
             break
-        
     else:
         print(f'Ganaste la palabra era {unknown_word_string.upper()}')
         break
