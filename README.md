@@ -1,1 +1,1 @@
-# Little App Write in Pyhon
+# Small Applications Written in Python
