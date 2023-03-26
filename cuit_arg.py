@@ -1,69 +1,70 @@
 import sys
-import math
 
-option = """Tipo Persona:
+def cuit_generator():
+    option = "Tipo Persona:\n\n1-Empresa.\n2-Mujer.\n3-Hombre.\n\n0-Salir.\n\nEscoja un opcion (numero): "
 
-1-Empresa.
-2-Mujer.
-3-Hombre.
+    error_value = lambda:print("Solo de admiten numeros!")
 
-0-Salir.
+    KEY_VALIDATOR = (5,4,3,2,7,6,5,4,3,2)
 
-Escoja un opcion (numero): """
+    while True:
+        try:
+            person = int(input(option))
+            
+            if person < 0 or person > 3:
+                print('Elija una opcion correcta.')
+            elif person == 0:
+                sys.exit()
+            elif person == 1:
+                person = 30
+                break
+            elif person == 2:
+                person = 27
+                break
+            elif person == 3:
+                person = 20
+                break        
+            else:
+                break
+            
+        except ValueError:
+            error_value()
 
-
-while True:
-    try:
-        person = int(input(option))
-        
-        if person < 0 or person > 3:
-            print('Elija una opcion correcta.')
-        elif person == 0:
-            sys.exit()
-        elif person == 1:
-            person = 30
+    while True:
+        try:
+            number = int(input("Ingrese su numero de indentificacion: ")) 
             break
-        elif person == 2:
-            person = 27
-            break
-        elif person == 3:
-            person = 20
-            break        
-        else:
-            break
-        
-    except ValueError:
-        print('Solo se adminten numeros!!!')
+        except ValueError:
+            error_value()
 
-while True:
-    try:
-        number = int(input("Ingrese su numero de indentificacion: "))
-        break
-    except ValueError:
-        print('Solo se adminten numeros!!!')
-        
-person_list = list(str(person))
-person_list = [int(x) for x in person_list]
+    person_list = [int(d) for d in str(person)]
+    number_list = [int(d) for d in str(number)]
 
-number_list = list(str(number))
-number_list = [int(x) for x in number_list]
-for i in range(8):
-    if len(number_list) < 8:
-        number_list.insert(0,0)
+    for i in range(8):
+        if len(number_list) < 8:
+            number_list.insert(0,0)
 
-number_end = person_list + number_list
+    number_end = person_list + number_list
 
-print(number_end)
 
-key_validator = (5,4,3,2,7,6,5,4,3,2)
-minumero = 0
+    number_validator = 0
+    if len(KEY_VALIDATOR) == len(number_end):
+        for i in range(len(KEY_VALIDATOR)):
+            result = number_end[i] * KEY_VALIDATOR[i]
+            number_validator +=result
 
-if len(key_validator) == len(number_end):
-    for i in range(len(key_validator)):
-        cuit = number_end[i] * key_validator[i]
-        minumero +=cuit
-        print(minumero)
+    number_validator = (((number_validator//11)*11)+11-number_validator)
 
-resto = (((minumero//11)*11)+11-minumero)
+    if number_validator == 10 and person == 20:
+        person = 23
+        number_validator = 9
+    if number_validator == 10 and person == 27:
+        person = 23
+        number_validator = 4
 
-print(resto)
+    cuit = str(person) + str(number) + str(number_validator)
+
+    print(f'El CUIT es: {cuit[0:2]}-{cuit[2:10]}-{cuit[10]}')
+
+if __name__ == __name__:
+    cuit_generator()
